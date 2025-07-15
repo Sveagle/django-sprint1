@@ -1,10 +1,12 @@
-"""View-функции приложения blog, текущие функции:
-index - главная страница сайта.
-post_detail - детали поста.
-category_posts - страница категории.
+"""View-функции приложения blog.
+
+Доступные функции:
+    index - главная страница со списком последних постов.
+    post_detail - детальная страница конкретного поста.
+    category_posts - страница категории с относящимися к ней постами.
 """
-from django.shortcuts import render
 from django.http import Http404
+from django.shortcuts import render
 
 posts = [
     {
@@ -49,25 +51,24 @@ posts = [
     },
 ]
 
+posts_dict = {post['id']: post for post in posts}
+
 
 def index(request):
     """Рендер главной страницы сайта "Блогикум"."""
     context = {
         'posts': reversed(posts),
-        'is_detail': False,
     }
     return render(request, 'blog/index.html', context)
 
 
 def post_detail(request, post_id):
     """Рендер страницы с содержанием выбранного поста."""
-    posts_dict = {post['id']: post for post in posts}
     post = posts_dict.get(post_id)
     if post is None:
-        raise Http404("Пост не найден")
+        raise Http404(f"Пост {post_id} не найден")
     context = {
         'post': post,
-        'is_detail': True,
     }
     return render(request, 'blog/detail.html', context)
 
