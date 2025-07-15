@@ -2,13 +2,15 @@
 <html lang="ru">
   <head>
     {% include "includes/head.html" %}
-		<title>{% block title %}{% endblock %}</title>
+		<title>{% block title %} Вы не определили название страницы! {% endblock %}</title>
   </head>
   <body>
     {% include "includes/header.html" %}
     <main>
+      <div class="container py-5">
       {% block content %}{% endblock %}
+      </div>
     </main>
-	</body>
+  </body>
   {% include "includes/footer.html" %}
 </html>
